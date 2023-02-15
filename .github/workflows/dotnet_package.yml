@@ -1,0 +1,30 @@
+# This workflow will build a .NET project
+# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-net
+
+name: .NET
+
+on:
+  push:
+    branches: [ "main" ]
+    paths:  
+      - '.github/workflows/dotnet_package.yml'
+      - 'GitHubTest.Lb/'
+
+jobs:
+  build:
+
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-dotnet@v2
+      with:
+        dotnet-version: '2.0.x'
+        source-url: https://nuget.pkg.github.com/glensouza/index.json
+      env:
+        NUGET_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+    - run: dotnet build GitHubTest.Lib
+    - name: Create the package
+      run: dotnet pack --configuration Release GitHubTest.Lib
+    - name: Publish the package to GPR
+      run: dotnet nuget push GitHubTest.Lib/bin/Release/*.nupkg
