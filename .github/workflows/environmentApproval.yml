@@ -19,7 +19,7 @@ jobs:
         run: echo deploy to environment NonPROD
 
   deploy_PROD:
-    needs: [build]
+    needs: [deploy_NonPROD]
     runs-on: ubuntu-latest
     environment: PROD
     steps:
