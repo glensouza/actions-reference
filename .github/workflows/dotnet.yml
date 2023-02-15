@@ -29,17 +29,17 @@ jobs:
         run: cd $GITHUB_WORKSPACE
 
       - name: Restore Packages
-        run: nuget restore .\GitHubTest.Web\GitHubTest.Web.csproj
+        run: nuget restore GitHubTest.sln
 
       - name: Build Solution
         run: |
-          msbuild.exe .\GitHubTest.Web\GitHubTest.Web.csproj /p:platform="Any CPU" /p:configuration="Release"
+          msbuild.exe GitHubTest.Web\GitHubTest.Web.csproj /p:platform="Any CPU" /p:configuration="Release"
         
       - name: Run Tests
-        run: vstest.console.exe .\GitHubTest.Tests\bin\Release\GitHubTest.Tests.dll
+        run: vstest.console.exe GitHubTest.Tests\bin\Release\GitHubTest.Tests.dll
 
       - name: Publish to folder
-        run: msbuild .\GitHubTest.Web\GitHubTest.Web.csproj /nologo /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="\published\"
+        run: msbuild GitHubTest.Web\GitHubTest.Web.csproj /nologo /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="\published\"
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v2
