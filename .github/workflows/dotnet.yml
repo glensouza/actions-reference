@@ -33,7 +33,7 @@ jobs:
 
       - name: Build Solution
         run: |
-          msbuild.exe GitHubTest.Web\GitHubTest.Web.csproj /p:platform="Any CPU" /p:configuration="Release"
+          msbuild.exe /p:platform="Any CPU" /p:configuration="Release"
         
       - name: Run Tests
         run: vstest.console.exe GitHubTest.Tests\bin\Release\GitHubTest.Tests.dll
