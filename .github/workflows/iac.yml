@@ -24,6 +24,6 @@ jobs:
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
     - uses: azure/arm-deploy@v1
       with:
-        resourceGroupName: GitHubDemo
-        template: IaC/main.json
-        parameters: sites_githubdemoweb_name=githubdemoweb serverfarms_GitHubDemo_name=GitHubDemo
+        resourceGroupName: GitHubDemo1
+        template: IaC/main.bicep
+        parameters: sites_githubdemoweb_name=githubdemoweb1 serverfarms_GitHubDemo_name=GitHubDemo1
