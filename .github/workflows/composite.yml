@@ -4,7 +4,8 @@ on:
   push: 
     paths:
     - '.github/workflows/composite.yml'
-    
+  workflow_dispatch:
+  
 env:
   ACR-NAME: myacr
 
