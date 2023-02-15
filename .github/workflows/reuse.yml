@@ -4,6 +4,7 @@ on:
   push:
     paths:
     - '.github/workflows/reuse.yml'
+  workflow_dispatch:
     
 jobs:
   setup:
