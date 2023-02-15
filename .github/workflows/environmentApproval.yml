@@ -1,0 +1,21 @@
+name: Environment Approval
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: build
+        run: echo Building code
+
+  deploy:
+    needs: [build]
+    strategy:
+      matrix:
+        envs: [NonPROD, PROD]
+    runs-on: ubuntu-latest
+    steps:
+      - name: test
+        run: echo deploy to environment ${{ matrix.envs }}
