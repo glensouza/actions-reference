@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
 
 env:
-  HANDLE: 'T.J. Corrigan'
+  HANDLE: 'glensouza'
 
 jobs:
   say-hello:
