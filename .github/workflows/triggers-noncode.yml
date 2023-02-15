@@ -17,7 +17,7 @@ jobs:
           ISSUE: ${{ github.event.issue.title }}
       - uses: devops-actions/issue-comment-tag@v0.1.0
         with:
-          team: tjcorr
+          team: glensouza
           issue: ${{ github.event.issue.number }}
           owner: ${{ github.repository_owner }}
           repo: ${{ github.repository }}

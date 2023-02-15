@@ -1,0 +1,28 @@
+name: OIDC Test
+
+on:
+  workflow_dispatch:
+    
+permissions:
+  id-token: write
+  contents: read
+
+jobs:
+  gh-runner:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: AZ CLI Login
+      uses: azure/login@v1
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+    
+    - name: AZ CLI Test
+      uses: azure/cli@v1
+      with:
+        inlineScript: |
+          az account show
