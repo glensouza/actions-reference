@@ -1,4 +1,4 @@
-name: Build and Tests
+name: Build, Test and Deploy to Azure Web App
 
 on:  
   push:
@@ -7,6 +7,7 @@ on:
       - '.github/workflows/dotnet.yml'
       - 'GitHubTest.Web/'
       - 'GitHubTest.Tests/'
+  workflow_dispatch:
 
 jobs:  
   build:    
@@ -15,8 +16,8 @@ jobs:
     steps:      
       - uses: actions/checkout@v2
       
-      - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v1
+      - name: Setup MSBuild path
+        uses: microsoft/setup-msbuild@v1.0.2
 
       - name: Setup NuGet
         uses: NuGet/setup-nuget@v1.0.5
@@ -36,3 +37,34 @@ jobs:
         
       - name: Run Tests
         run: vstest.console.exe .\GitHubTest.Tests\bin\Release\Sandbox.Tests.dll
+
+      - name: Publish to folder
+        run: msbuild /nologo /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="\published\"
+
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v2
+        with:
+          name: ASP-app
+          path: '/published/**'
+
+  deploy:
+    runs-on: windows-latest
+    needs: build
+    environment:
+      name: 'PROD'
+      url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
+
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v2
+        with:
+          name: ASP-app
+
+      - name: Deploy to Azure Web App
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: 'githubdemoweb'
+          slot-name: 'Production'
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_19F8008E4D5445D98833CE414AEC97D0 }}
+          package: .
