@@ -10,12 +10,18 @@ jobs:
       - name: build
         run: echo Building code
 
-  deploy:
+  deploy_NonPROD:
     needs: [build]
-    strategy:
-      matrix:
-        envs: [NonPROD, PROD]
     runs-on: ubuntu-latest
+    environment: NonPROD
     steps:
       - name: test
-        run: echo deploy to environment ${{ matrix.envs }}
+        run: echo deploy to environment NonPROD
+
+  deploy_PROD:
+    needs: [build]
+    runs-on: ubuntu-latest
+    environment: PROD
+    steps:
+      - name: test
+        run: echo deploy to environment PROD
