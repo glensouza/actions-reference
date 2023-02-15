@@ -1,6 +1,12 @@
 name: Infra as Code
 
-on: [workflow_dispatch]
+on:
+  push:
+    branches: [ "main" ]
+    paths:  
+      - '.github/workflows/iac.yml'
+      - 'IaC/'
+  workflow_dispatch:
 
 permissions:
   id-token: write
@@ -21,5 +27,5 @@ jobs:
     - uses: azure/arm-deploy@v1
       with:
         resourceGroupName: GitHubDemo
-        template: ./IaC/main.bicep
+        template: IaC/main.bicep
         parameters: sites_githubdemoweb_name=githubdemoweb serverfarms_GitHubDemo_name=GitHubDemo
