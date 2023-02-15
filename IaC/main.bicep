@@ -3,7 +3,7 @@ param serverfarms_GitHubDemo_name string = 'GitHubDemo'
 
 resource serverfarms_GitHubDemo_name_resource 'Microsoft.Web/serverfarms@2022-03-01' = {
   name: serverfarms_GitHubDemo_name
-  location: 'centralus'
+  location: resourceGroup().location
   sku: {
     name: 'F1'
     tier: 'Free'
@@ -16,7 +16,7 @@ resource serverfarms_GitHubDemo_name_resource 'Microsoft.Web/serverfarms@2022-03
 
 resource sites_githubdemoweb_name_resource 'Microsoft.Web/sites@2022-03-01' = {
   name: sites_githubdemoweb_name
-  location: 'centralus'
+  location: resourceGroup().location
   kind: 'app'
   properties: {
     enabled: true
