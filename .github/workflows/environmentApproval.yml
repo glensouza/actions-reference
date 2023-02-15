@@ -1,0 +1,27 @@
+name: Environment Approval
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: build
+        run: echo Building code
+
+  deploy_NonPROD:
+    needs: [build]
+    runs-on: ubuntu-latest
+    environment: NonPROD
+    steps:
+      - name: test
+        run: echo deploy to environment NonPROD
+
+  deploy_PROD:
+    needs: [build]
+    runs-on: ubuntu-latest
+    environment: PROD
+    steps:
+      - name: test
+        run: echo deploy to environment PROD
