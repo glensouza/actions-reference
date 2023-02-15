@@ -1,0 +1,19 @@
+name: Build and Publish Javascript Code
+
+on:
+  workflow_call:
+ 
+jobs:
+  build-code:
+    runs-on: ubuntu-latest
+    name: Build Code
+    steps:
+      - name: Build Code
+        run: echo "building code"
+  publish-code:
+    needs: build-code
+    runs-on: ubuntu-latest
+    name: Publish Code
+    steps:
+      - name: Publish Code
+        run: echo "publishing code"
