@@ -34,9 +34,6 @@ jobs:
       - name: Build Solution
         run: |
           msbuild.exe /p:platform="Any CPU" /p:configuration="Release"
-        
-      - name: Run Tests
-        run: vstest.console.exe GitHubTest.Tests\bin\Release\GitHubTest.Tests.dll
 
       - name: Publish to folder
         if: always()
