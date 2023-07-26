@@ -43,6 +43,7 @@ jobs:
         run: msbuild GitHubTest.Web\GitHubTest.Web.csproj /nologo /verbosity:m /t:Build /t:pipelinePreDeployCopyAllFilesToOneFolder /p:_PackageTempDir="\published\"
 
       - name: Upload artifact for deployment job
+        if: always()
         uses: actions/upload-artifact@v2
         with:
           name: ASP-app
